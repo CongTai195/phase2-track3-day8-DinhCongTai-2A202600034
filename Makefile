@@ -13,10 +13,10 @@ typecheck:
 	mypy src
 
 run-scenarios:
-	python -m langgraph_agent_lab.cli run-scenarios --config configs/lab.yaml --output outputs/metrics.json
+	python -m langgraph_agent_lab.cli run-scenarios --config configs/lab.yaml --output outputs/metrics_final.json
 
 grade-local:
-	python -m langgraph_agent_lab.cli validate-metrics --metrics outputs/metrics.json
+	python -m langgraph_agent_lab.cli validate-metrics --metrics outputs/metrics_final.json
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache htmlcov dist build *.egg-info outputs/*.json

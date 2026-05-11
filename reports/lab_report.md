@@ -2,11 +2,11 @@
 
 ## Metrics summary
 
-- Total scenarios: 7
+- Total scenarios: 15
 - Success rate: 100.00%
-- Average nodes visited: 6.43
-- Total retries: 3
-- Total interrupts: 2
+- Average nodes visited: 6.60
+- Total retries: 5
+- Total interrupts: 5
 
 ## TODO(student)
 
