@@ -184,16 +184,16 @@ Pick one or more:
 
 ## Submission checklist
 
-- [ ] All `TODO(student)` sections completed
-- [ ] `make test` passes
-- [ ] `make run-scenarios` generates valid `outputs/metrics.json`
-- [ ] `make grade-local` passes validation
-- [ ] `reports/lab_report.md` filled in with architecture explanation, metrics analysis, and improvement ideas
-- [ ] Can explain at least one route and one failure mode during demo
+- [x] All `TODO(student)` sections completed — `state.py`, `nodes.py`, `routing.py`, `graph.py`, `persistence.py`
+- [x] `make test` passes — **11/11 tests**
+- [x] `make run-scenarios` generates valid `outputs/metrics.json` — **22/22 scenarios, 100% success rate**
+- [x] `make grade-local` passes validation — `success_rate=100.00%`
+- [x] `reports/lab_report.md` filled in with architecture explanation, metrics analysis, and improvement ideas
+- [x] Can explain at least one route and one failure mode during demo
 
 **For 90+ points, also include:**
-- [ ] At least one bonus extension (persistence, parallel fan-out, HITL, time travel, diagram)
-- [ ] Evidence of extension in report (screenshot, log output, or diagram)
+- [x] Bonus extensions completed — see list below
+- [x] Evidence of extension in report (`reports/lab_report.md` §7, `reports/graph_diagram.md`)
 
 ---
 
@@ -208,4 +208,54 @@ Pick one or more:
 4. **SqliteSaver API**: In `langgraph-checkpoint-sqlite` 3.x, use `SqliteSaver(conn=sqlite3.connect(...))` not `SqliteSaver.from_conn_string()` (returns context manager, not checkpointer).
 
 5. **Forgetting finalize**: Every route must end at `finalize → END`. Missing this means the graph never terminates for some scenarios.
-# phase2-track3-day8-DinhCongTai-2A202600034
+---
+
+## ✅ Completion summary — Dinh Cong Tai (2A202600034)
+
+### Core implementation
+
+| File | Status | What was implemented |
+|---|---|---|
+| `state.py` | ✅ | Typed `AgentState` with `Annotated[list, add]` reducers, `evaluation_result` field, `initial_state()`, `make_event()` |
+| `nodes.py` | ✅ | All 11 nodes: intake (PII redact), classify (priority keyword routing), tool (idempotent mock), evaluate (ERROR: gate), retry (bounded + backoff), dead_letter, risky_action, approval (HITL), clarify, answer (grounded), finalize |
+| `routing.py` | ✅ | All 4 routing functions with safe fallbacks, logging, explicit path maps |
+| `graph.py` | ✅ | All nodes + edges wired, explicit conditional path dicts, `get_mermaid_diagram()` bonus helper |
+| `persistence.py` | ✅ | `MemorySaver`, `SqliteSaver` (WAL mode, correct 3.x API), `PostgresSaver`; `get_state_history()` + `resume_from_checkpoint()` helpers |
+
+### Test results
+
+```
+make test          →  11/11 passed
+make run-scenarios →  22/22 scenarios, 100% success rate
+make grade-local   →  Metrics valid. success_rate=100.00%
+make typecheck     →  Success: no issues found in 10 source files
+make lint          →  (clean)
+```
+
+### Bonus extensions completed
+
+| Extension | Command | Evidence |
+|---|---|---|
+| **Graph diagram** | `make diagram` | `reports/graph_diagram.md` — Mermaid from `draw_mermaid()` |
+| **Time travel** | `make demo-time-travel` | `scripts/demo_time_travel.py` — 12 checkpoints, replay from checkpoint [5], answer matches ✅ |
+| **Crash recovery** | `make demo-crash-recovery` | `scripts/demo_crash_recovery.py` — resume from mid-run checkpoint, skips 5 nodes ✅ |
+| **Real HITL** | `LANGGRAPH_INTERRUPT=true make run-scenarios` | `approval_node` uses `interrupt()`, mock fallback for CI |
+| **SQLite persistence** | `checkpointer: sqlite` in `configs/lab.yaml` | `SqliteSaver(conn=sqlite3.connect(...))` + WAL mode |
+| **Streamlit UI** | `make ui` → `localhost:8501` | `app.py` — 4 pages: Run Query, Scenarios, Metrics, Graph Diagram |
+| **22 test scenarios** | `data/sample/scenarios.jsonl` | Extended from 7 → 22, covers all routes + priority/boundary edge cases |
+
+### Make commands (full list)
+
+| Command | What it does |
+|---|---|
+| `make install` | Install project + dev dependencies |
+| `make test` | Run pytest (11 tests) |
+| `make lint` | Run ruff linter |
+| `make typecheck` | Run mypy type checker |
+| `make run-scenarios` | Execute all 22 scenarios → `outputs/metrics.json` |
+| `make grade-local` | Validate metrics.json schema |
+| `make diagram` | Export Mermaid graph → `reports/graph_diagram.md` |
+| `make demo-time-travel` | Time-travel demo (checkpoint replay) |
+| `make demo-crash-recovery` | Crash-resume demo |
+| `make ui` | Launch Streamlit UI on `localhost:8501` |
+| `make clean` | Remove caches and generated files |

@@ -5,3 +5,18 @@
 {"id":"S05_error","query":"Timeout failure while processing request","expected_route":"error","requires_approval":false,"should_retry":true,"tags":["retry"]}
 {"id":"S06_delete","query":"Delete customer account after support verification","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","destructive"]}
 {"id":"S07_dead_letter","query":"System failure cannot recover after multiple attempts","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":1,"tags":["dead_letter","retry"]}
+{"id":"S08_simple_faq","query":"What are your business hours?","expected_route":"simple","requires_approval":false,"should_retry":false,"tags":["simple","faq"]}
+{"id":"S09_simple_policy","query":"How long does shipping usually take?","expected_route":"simple","requires_approval":false,"should_retry":false,"tags":["simple","faq"]}
+{"id":"S10_tool_track","query":"Can you track my shipment for order 99876?","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["tool","track"]}
+{"id":"S11_tool_search","query":"Search for all orders placed by customer john@example.com","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["tool","search"]}
+{"id":"S12_tool_find","query":"Find the invoice for transaction 77432","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["tool","find"]}
+{"id":"S13_missing_vague","query":"Help me with this","expected_route":"missing_info","requires_approval":false,"should_retry":false,"tags":["clarification","vague"]}
+{"id":"S14_missing_pronoun","query":"Fix that please","expected_route":"missing_info","requires_approval":false,"should_retry":false,"tags":["clarification","pronoun"]}
+{"id":"S15_risky_cancel","query":"Cancel my subscription and stop all future charges","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","risky","cancel"]}
+{"id":"S16_risky_remove","query":"Remove inactive user accounts from the system","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","destructive","remove"]}
+{"id":"S17_risky_revoke","query":"Revoke API access for this partner immediately","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["hitl","risky","revoke"]}
+{"id":"S18_error_crash","query":"The payment gateway crashed and is unavailable","expected_route":"error","requires_approval":false,"should_retry":true,"tags":["retry","crash"]}
+{"id":"S19_error_retry_success","query":"Connection error while processing the refund request — please retry","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["risky","priority","error-contains-risky"]}
+{"id":"S20_dead_letter_tight","query":"Service unavailable — cannot recover after repeated errors","expected_route":"error","requires_approval":false,"should_retry":true,"max_attempts":1,"tags":["dead_letter","retry"]}
+{"id":"S21_boundary_item","query":"I need to check the item details for order 55123","expected_route":"tool","requires_approval":false,"should_retry":false,"tags":["tool","boundary","item-not-it"]}
+{"id":"S22_priority_risky_over_tool","query":"Refund and look up order status for customer 789","expected_route":"risky","requires_approval":true,"should_retry":false,"tags":["risky","priority","multi-keyword"]}

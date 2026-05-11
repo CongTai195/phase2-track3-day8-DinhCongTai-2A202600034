@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
-import yaml
+import yaml  # type: ignore[import-untyped]
 
 from .graph import build_graph
 from .metrics import MetricsReport, metric_from_state, summarize_metrics, write_metrics
